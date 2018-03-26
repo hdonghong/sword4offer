@@ -14,30 +14,18 @@ public class Merge {
         } else if (list2 == null) {
             return list1;
         } else {
-            ListNode result = list1.val < list2.val ?
-                    list1 : list2;
-            merge(
-                    result,
-                    result == list1 ? list2 : list1
-                );
-            return result;
+            ListNode resultHead = null;
+            if (list1.val < list2.val) {
+                resultHead = list1;
+                resultHead.next = Merge(list1.next, list2);
+            } else {
+                resultHead = list2;
+                resultHead.next = Merge(list1, list2.next);
+            }
+            return resultHead;
         }
     }
 
-    private void merge(ListNode p, ListNode q) {
-        while (q != null) {
-            if (p.next == null) {
-                p.next = q;
-                return;
-            } else if (q.val < p.next.val) {
-                ListNode temp = p.next;
-                p.next = new ListNode(q.val);
-                p = p.next;
-                p.next = temp;
-                q = q.next;
-            }
-        }
-    }
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
