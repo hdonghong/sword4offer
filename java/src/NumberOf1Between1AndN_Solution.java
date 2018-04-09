@@ -12,7 +12,7 @@
 public class NumberOf1Between1AndN_Solution {
 
     public int NumberOf1Between1AndN_Solution(int n) {
-
+        return 1;
     }
 
     private int powTen(int n) {
