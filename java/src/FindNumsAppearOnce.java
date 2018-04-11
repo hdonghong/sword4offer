@@ -12,6 +12,7 @@
  */
 public class FindNumsAppearOnce {
 
+    /*
     public void FindNumsAppearOnce(int [] array,int num1[] , int num2[]) {
         java.util.Map<Integer, Integer> map = new java.util.HashMap<>();
         for (int e : array) {
@@ -34,6 +35,39 @@ public class FindNumsAppearOnce {
             }
         }
     }
+    */
 
-    // 异或解法
+    /**
+     * 异或解法
+     * 1. 0与任何数异或结果为该数
+     * 2. 异或遍历题目数组所有元素的结果为两个不同数字的异或结果
+     * 3. 因为是两个不同数字，其异或结果的二进制数中必有一个1，找到最低位1出现的index位置，可区分出两个不同数组
+     * 4. 不同数组：一个是二进制数N位置为1的数组A，一个是二进制数N位置为0的数组B
+     * 5. 继续以0异或遍历数组，区分数组A、B
+     */
+    public void FindNumsAppearOnce(int [] array,int num1[] , int num2[]) {
+        if (array == null || array.length < 2) return;
+
+        int xorResult = 0;
+        for (int e : array) xorResult ^= e;
+
+        if (xorResult == 0) return;
+
+        // 注意index=0，不是1
+        int index = 0;
+        while ((xorResult & 1) != 1) {
+            xorResult >>= 1;
+            index++;
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            if (bitOne(array[i], index)) num1[0] ^= array[i];
+            else num2[0] ^= array[i];
+        }
+    }
+
+    /** index位置为1返回true */
+    private boolean bitOne(int num, int index) {
+        return ((num >> index) & 1) == 1;
+    }
 }
