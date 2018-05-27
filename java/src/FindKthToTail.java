@@ -1,3 +1,5 @@
+import sun.plugin.javascript.navig.Link;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,5 +58,27 @@ class ListNode {
 
     ListNode(int val) {
         this.val = val;
+    }
+
+    public ListNode(int[] vals) {
+        if (vals == null || vals.length == 0) {
+            throw new IllegalArgumentException("mmm");
+        }
+
+        this.val = vals[0];
+        ListNode cur = this;
+        for (int i = 1; i < vals.length; i++) {
+            cur.next = new ListNode(vals[i]);
+            cur = cur.next;
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (ListNode p = this; p != null; p = p.next) {
+            ret.append(p.val + " ");
+        }
+        return ret.toString();
     }
 }
