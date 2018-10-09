@@ -3,36 +3,27 @@
  *
  * 题目描述
  * 输入一棵二叉树，判断该二叉树是否是平衡二叉树。
- * TODO
  * @author hdonghong
- * @date 2018/05/26
+ * @since 2018/05/26
  */
 public class IsBalancedSolution {
 
     public boolean IsBalanced_Solution(TreeNode root) {
-        java.util.Stack<TreeNode> stack = new java.util.Stack<>();
-        return inOrder(root, stack);
+        return getDepth(root) != -1;
     }
 
-    private boolean inOrder(TreeNode node, java.util.Stack<TreeNode> stack) {
-        if (node == null) {
-            return true;
-        }
-        if (!inOrder(node.left, stack)) {
-            return false;
-        }
+    // 规定-1为不平衡
+    private int getDepth(TreeNode root) {
+        if (root == null) return 0;
 
-        if (!stack.isEmpty()) {
-            TreeNode top = stack.pop();
-            if (top.val > node.val) {
-                return false;
-            }
-        }
-        stack.push(node);
+        int left = getDepth(root.left);
+        if (left == -1) return -1;
+        int right = getDepth(root.right);
+        if (right == -1) return -1;
 
-        return inOrder(node.right, stack);
-
+        return Math.abs(left - right) > 1 ? -1 : Math.max(left, right) + 1;
     }
+
 
     public static void main(String[] args) {
         TreeNode[] ts = new TreeNode[7];
