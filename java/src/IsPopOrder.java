@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * IsPopOrder class<br/>
  *
@@ -12,11 +14,30 @@
 public class IsPopOrder {
 
     public boolean IsPopOrder(int [] pushA,int [] popA) {
-        if (pushA.length != popA.length) return false;
+        if (pushA == null || pushA.length < 1) { return false; }
+        if (popA == null || popA.length < 1) { return false; }
+        if (pushA.length != popA.length) { return false; }
 
+        Stack<Integer> stack = new Stack<>();
+        int pushIdx = 0;
+        int popIdx = 0;
+        int len = pushA.length;
+        while (popIdx < len) {
+            if (!stack.isEmpty() && stack.peek() == popA[popIdx]) {
+                stack.pop();
+                popIdx++;
+            } else if (pushIdx >= len && !stack.isEmpty()) {
+                return false;
+            } else if (pushA[pushIdx] == popA[popIdx]) {
+                pushIdx++;
+                popIdx++;
+            } else {
+                stack.add(pushA[pushIdx]);
+                pushIdx++;
+            }
+        }
 
-
-        return false;
+        return true;
     }
 
 }
